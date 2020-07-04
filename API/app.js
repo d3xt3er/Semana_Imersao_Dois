@@ -23,7 +23,7 @@ app.use(
     express.static(path.resolve(__dirname, 'temp', 'uploads'))
 );
 
-mongoose.connect('mongodb+srv://Paulo:34984c27@cluster0-6ha0s.mongodb.net/celke',{
+mongoose.connect('mongodb+srv://Paulo:34984c27@cluster0-6ha0s.mongodb.net/celkedois',{
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => {
@@ -72,7 +72,7 @@ app.get('/home', (req, res) =>{
     })
 });
 
-app.post('/home', (req, res) => {
+app.post('/home', async (req, res) => {
 
     const dados = {
         "topTitulo": "Temos a solução que a sua empresa precisa!",
@@ -116,7 +116,7 @@ app.post('/home', (req, res) => {
         "portQuatroSubtitulo": "This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.",
     };
 
-    const homeExiste = Home.findOne({});
+    const homeExiste = await Home.findOne({});
     if(homeExiste){
         return res.status(400).json({
             error: true,
@@ -130,7 +130,7 @@ app.post('/home', (req, res) => {
             message: "Erro: conteudo da pagina home não foi cadastrado!"
         })
     })
-
+  
     return res.json({
         error: false,
         message: "Conteudo da pagina home cadastrado com sucesso!"
